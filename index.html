@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inventario - Mecato Hotel Beraka</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="#inicio-container">Inicio</a></li>
+        <li><a href="#ventas_historial">Registro de Ventas</a></li>
+        <li><a href="#inventario">Inventario</a></li>
+        <li><a href="#surtir">Surtir</a></li>
+        <!-- <li><a href="#movimientos-container">Movimientos y ahorro</a></li> -->
+        <li><a href="#agregar_productos">Nuevo Producto</a></li>
+        <li><a href="#modulo_turno">Entregar Turno</a></li>
+      </ul>
+    </nav>
+
+    <div class="header">
+      <h1></h1>
+    </div>
+
+    <main class="container">
+      <!-- MODULO INICIO, VENTAS Y PENDIENTES -->
+
+      <div id="inicio-container">
+        <!-- Sección: Estado de Cajas -->
+        <section id="cajas" class="card active">
+          <h2>Estado de Cajas</h2>
+          <ul id="estadoCaja"></ul>
+        </section>
+
+        <!-- Sección: Registrar Venta -->
+        <section id="ventas" class="card active">
+          <h2>Registrar Venta</h2>
+          <form id="formVenta">
+            <select name="producto_id" required>
+              <option value="">Seleccione producto</option>
+            </select>
+            <input
+              type="number"
+              name="cantidad"
+              placeholder="Cantidad"
+              required
+            />
+            <select name="estado" required>
+              <option value="pagado">Pagado</option>
+              <option value="pendiente">Pendiente</option>
+            </select>
+            <input
+              type="text"
+              name="habitacion"
+              id="habitacionInput"
+              placeholder="Mesa o Cliente"
+            />
+            <select name="metodo_pago" required>
+              <option value="efectivo">Efectivo</option>
+              <option value="nequi">Nequi</option>
+              <option value="daviplata">Daviplata</option>
+            </select>
+            <select name="vendedor" id="vendedorSelect" required>
+              <option value="">Responsable de venta</option>
+              <option value="Patricia">Patricia</option>
+              <option value="Diego">Diego</option>
+              <option value="Camila">Camila</option>
+              <option value="Otro">Otro</option>
+            </select>
+            <input
+              type="text"
+              name="vendedor_otro"
+              id="vendedorOtro"
+              placeholder="¿Quién vendió?"
+              style="display: none"
+            />
+
+            <input
+              type="text"
+              name="vendedor_otro"
+              id="vendedorOtro"
+              placeholder="¿Quién vendió?"
+              style="display: none"
+            />
+
+            <button type="submit">Registrar</button>
+          </form>
+        </section>
+
+        <section id="pendientes" class="card">
+          <h2>Ventas Pendientes</h2>
+          <button onclick="cargarPendientes()">🔄 Ver Pendientes</button>
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Recepción</th>
+                <!-- ✅ Nueva columna -->
+                <th>Artículos</th>
+                <th>Total</th>
+                <th>Mesa</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+
+            <tbody id="tabla-pendientes">
+              <!-- Filas generadas dinámicamente -->
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Modal: Pagar Pendiente -->
+        <dialog id="modal-pago-pendiente" class="modal-custom">
+          <form id="formPagoPendiente" class="form-dialog" method="dialog">
+            <h3 class="letra_pendiente">Pagar Venta Pendiente</h3>
+            <input type="hidden" id="idPendiente" name="idPendiente" />
+            <label class="letra_pendiente" for="metodoPagoPendiente"
+              >Método de Pago:</label
+            >
+            <select id="metodoPagoPendiente" required>
+              <option value="efectivo">Efectivo</option>
+              <option value="nequi">Nequi</option>
+              <option value="daviplata">Daviplata</option>
+            </select>
+            <div class="popup-actions">
+              <button type="submit">✅ Confirmar Pago</button>
+              <button
+                type="button"
+                onclick="document.getElementById('modal-pago-pendiente').close();"
+              >
+                ❌ Cancelar
+              </button>
+            </div>
+          </form>
+        </dialog>
+      </div>
+
+      <!-- MODULO TURNOS -->
+
+      <section id="modulo_turno" class="card">
+        <h2>Entrega de Turno</h2>
+
+        <form id="formEntregaTurno">
+          <label>Entregó:</label>
+          <select name="entrego" required>
+            <option value="">Selecciona</option>
+            <option value="Diego">Diego</option>
+            <option value="Camila">Camila</option>
+            <option value="Patricia">Patricia</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <input
+            type="text"
+            name="entrego_otro"
+            placeholder="¿Quién entregó?"
+            style="display: none"
+          />
+
+          <label>Recibió:</label>
+          <select name="recibio" required>
+            <option value="">Selecciona</option>
+            <option value="Diego">Diego</option>
+            <option value="Camila">Camila</option>
+            <option value="Patricia">Patricia</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <input
+            type="text"
+            name="recibio_otro"
+            placeholder="¿Quién recibió?"
+            style="display: none"
+          />
+
+          <label>Total Efectivo en Caja:</label>
+          <input
+            type="number"
+            name="total_efectivo"
+            id="totalEfectivoTurno"
+            readonly
+          />
+
+          <button type="submit">Entregar Turno</button>
+        </form>
+
+        <hr />
+
+        <h3>Historial de Entrega de Turnos</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Entregó</th>
+              <th>Recibió</th>
+              <th>Efectivo en Caja</th>
+            </tr>
+          </thead>
+          <tbody id="tablaTurnos">
+            <!-- Relleno dinámico -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- MODULO NUEVOS PRODUCTOS -->
+
+      <section id="agregar_productos" class="card">
+        <h2>Agregar Producto</h2>
+        <form id="formProducto">
+          <input
+            type="text"
+            name="nombre"
+            placeholder="Nombre del producto"
+            required
+          />
+          <input
+            type="number"
+            step="0.01"
+            name="precio"
+            placeholder="Precio unitario"
+            required
+          />
+          <input
+            type="number"
+            name="cantidad"
+            placeholder="Cantidad inicial"
+            required
+          />
+          <button type="submit">Agregar</button>
+        </form>
+      </section>
+
+      <!-- MODULO INVENTARIO -->
+
+      <section id="inventario" class="card">
+        <div class="inventario-header">
+          <h2>Inventario Actual</h2>
+          <button class="boton-editar-precio" onclick="document.getElementById('modalEditarPrecio').showModal()">✏️ Editar Precio de un Producto</button>
+          </button>
+        </div>
+
+        <dialog id="modalEditarPrecio">
+          <form id="formEditarPrecio" class="form-dialog" method="dialog">
+            <h3>Editar Precio</h3>
+
+            <label>Producto:</label>
+            <select id="productoSelect" name="producto_id" required></select>
+
+            <label>Precio actual:</label>
+            <input type="text" id="precioActual" readonly />
+
+            <label>Nuevo precio:</label>
+            <input type="number" name="nuevo_precio" step="0.01" required />
+
+            <div style="margin-top: 1rem">
+              <button type="submit">Cambiar Precio</button>
+              <button
+                type="button"
+                onclick="document.getElementById('modalEditarPrecio').close()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </dialog>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+            </tr>
+          </thead>
+          <tbody id="tablaProductos"></tbody>
+        </table>
+      </section>
+
+      <!-- MODULO SURTIR -->
+
+      <section id="surtir" class="card">
+        <h2>Surtir Inventario</h2>
+
+        <form id="formSurtir">
+          <label>Compró:</label>
+          <select name="comprador" id="compradorSelect" required>
+            <option value="">Seleccione recepcionista</option>
+            <option value="Patricia">Patricia</option>
+            <option value="Diego">Diego</option>
+            <option value="Camila">Camila</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <input
+            type="text"
+            name="comprador_otro"
+            id="compradorOtro"
+            placeholder="¿Quién compró?"
+            style="display: none"
+          />
+
+          <div id="productosComprados"></div>
+
+          <button type="button" onclick="agregarProductoCompra()">
+            + Agregar Producto
+          </button>
+
+          <input
+            type="number"
+            name="total_gastado"
+            placeholder="Total gastado ($)"
+            required
+          />
+
+          <button type="submit">Surtir</button>
+        </form>
+
+        <hr />
+
+        <h3>Últimas Compras</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Compró</th>
+              <th>Descripción</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="tablaCompras">
+            <!-- Últimas compras aquí -->
+          </tbody>
+        </table>
+      </section>
+
+      <section id="ventas_historial" class="card">
+        <h2>Historial de Ventas</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Vendió</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Estado</th>
+              <th>Medio</th>
+              <!-- ✅ Nueva columna -->
+            </tr>
+          </thead>
+          <tbody id="tablaVentasHistorial">
+            <!-- Se llena dinámicamente -->
+          </tbody>
+        </table>
+      </section>
+
+      <section id="movimientos-container" class="card" style="display: none">
+        <!-- Submódulo 1: Transferencia a Efectivo -->
+        <section id="transferir" style="margin-bottom: 2rem">
+          <h3>Transferir Nequi/Daviplata a Efectivo</h3>
+          <form id="formTransferencia">
+            <select name="origen" required>
+              <option value="">Origen</option>
+              <option value="nequi">Nequi</option>
+              <option value="daviplata">Daviplata</option>
+            </select>
+            <input type="number" name="monto" placeholder="Monto" required />
+            <button type="submit">Transferir a Efectivo</button>
+          </form>
+        </section>
+
+        <hr />
+
+        <!-- Submódulo 2: Caja Ahorro del Mecato -->
+        <section id="caja_ahorro" style="margin-bottom: 2rem; margin-top: 2rem">
+          <h3>Ahorro del Mecato</h3>
+          <div id="vistaAhorro" class="ahorro-blur">
+            <p id="valorAhorro">$•••••</p>
+            <button
+              onclick="document.getElementById('modalPinAhorro').showModal()"
+            >
+              🔒 Ver Ahorro
+            </button>
+          </div>
+          <form id="formMoverAhorro" style="margin-top: 20px">
+            <input
+              type="number"
+              name="monto"
+              placeholder="Monto al ahorro"
+              required
+            />
+            <button type="submit">Mover a Ahorro</button>
+          </form>
+        </section>
+
+        <hr />
+
+        <!-- Submódulo 3: Compras del Ahorro -->
+        <section id="compras_ahorro" style="margin-top: 2rem">
+          <h3>Registrar Compra desde Ahorro</h3>
+          <form id="formCompraAhorro">
+            <input
+              type="text"
+              name="descripcion"
+              placeholder="Detalle de la compra"
+              required
+            />
+            <input
+              type="number"
+              name="monto"
+              placeholder="Monto de la compra"
+              required
+            />
+            <button type="submit">Registrar Compra</button>
+          </form>
+          <button
+            style="margin-top: 1rem"
+            onclick="document.getElementById('modalVerCompras').showModal()"
+          >
+            📄 Ver Compras
+          </button>
+        </section>
+
+        <!-- Modal para desbloquear ahorro -->
+        <dialog id="modalPinAhorro">
+          <form method="dialog" id="formPinAhorro">
+            <p>Ingrese PIN para ver el ahorro</p>
+            <input type="password" id="pinAhorroInput" maxlength="4" required />
+            <div style="margin-top: 1rem">
+              <button type="submit">Desbloquear</button>
+              <button
+                type="button"
+                onclick="document.getElementById('modalPinAhorro').close()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </dialog>
+
+        <!-- Modal para ver compras desde ahorro -->
+        <dialog id="modalVerCompras">
+          <h3>Compras realizadas con el Ahorro</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Monto</th>
+              </tr>
+            </thead>
+            <tbody id="tablaComprasAhorro">
+              <!-- Dinámicamente -->
+            </tbody>
+          </table>
+          <div style="margin-top: 1rem">
+            <button
+              onclick="document.getElementById('modalVerCompras').close()"
+            >
+              Cerrar
+            </button>
+          </div>
+        </dialog>
+      </section>
+    </main>
+
+    <div id="mensajeExito" class="mensaje-exito">
+      ✅ Acción completada correctamente
+    </div>
+
+    <script src="js/productos.js"></script>
+    <script src="js/ventas.js"></script>
+    <script src="js/turno.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/pendientes.js"></script>
+    <script src="js/ventas_historial.js"></script>
+    <script src="js/surtir.js"></script>
+    <script src="js/movimientos.js"></script>
+    <script src="js/editar_precio.js"></script>
+    <!-- Transferencias -->
+    <script src="js/transferir.js"></script>
+    <!-- Transferencias -->
+
+    <script src="js/utils.js"></script>
+  </body>
+</html>

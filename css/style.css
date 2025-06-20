@@ -1,0 +1,465 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: url("../fondo_tienda.webp") no-repeat center center fixed;
+  background-size: cover;
+  color: #ffffff;
+}
+
+.header {
+  text-align: right;
+  padding: 20px;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #fff;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.card {
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+input, button {
+  flex: 1 1 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input {
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+button {
+  background: #ffffff;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #e0e0e0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+th {
+  font-weight: 500;
+}
+
+select {
+  flex: 1 1 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20fill%3D%22%23000%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22/%3E%3Cpath%20d%3D%22M0%200h24v24H0z%22%20fill%3D%22none%22/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-bar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.nav-bar a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Ocultar todas las secciones card por defecto */
+.card {
+    display: none;
+}
+
+/* Mostrar la sección activa */
+.card.active {
+    display: block;
+}
+
+/* Estilos para mostrar las secciones de cajas y ventas juntas */
+#inicio-container {
+    display: flex; /* Usar flexbox para organizar los elementos en línea */
+    gap: 1rem; /* Espacio entre las tarjetas (opcional) */
+}
+
+#inicio-container .card {
+    flex: 1; /* Hacer que ambas tarjetas ocupen el mismo espacio disponible */
+}
+
+#inicio-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#mensajeExito {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 9999;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.modal-custom {
+  padding: 20px;
+  border: none;
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  animation: zoomIn 0.3s ease;
+}
+
+.modal-custom h3 {
+  margin-top: 0;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.modal-custom select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.8);
+  color: #000;
+}
+
+.popup-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.popup-actions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.popup-actions button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.popup-actions button[type="button"] {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.popup-actions button:hover {
+  opacity: 0.85;
+}
+
+@keyframes zoomIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+.mensaje-exito {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  display: none;
+  z-index: 9999;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+#movimientos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+#movimientos-container .submodulo {
+  flex: 1 1 300px;
+}
+
+
+dialog {
+  border: none;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.ahorro-blur {
+  filter: blur(5px);
+  transition: filter 0.3s ease-in-out;
+  text-align: center;
+}
+
+.ahorro-visible {
+  filter: none !important;
+}
+
+.modal-custom {
+  padding: 2rem;
+  border-radius: 10px;
+  background: #fff;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  margin: auto;
+}
+
+.submodulo {
+  margin-bottom: 2rem;
+}
+
+.submodulo form input,
+.submodulo form select,
+.submodulo form button {
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+.form-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  min-width: 300px;
+}
+
+.form-dialog h3 {
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form-dialog label {
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.form-dialog input,
+.form-dialog select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #fff;
+  width: 100%;
+}
+
+.form-dialog input[readonly] {
+  background-color: #f0f0f0;
+  color: #444;
+  font-weight: bold;
+}
+
+.form-dialog button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 1rem;
+}
+
+.form-dialog button[type="submit"] {
+  background: #4caf50;
+  color: white;
+}
+
+.form-dialog button[type="submit"]:hover {
+  background: #449d48;
+}
+
+.form-dialog button[type="button"] {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.form-dialog button[type="button"]:hover {
+  background: #cacaca;
+}
+
+.letra_pendiente {
+  color: #000;
+}
+
+.inventario-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.boton-editar-precio {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s ease;
+
+  /* 🔧 Anular el estilo heredado */
+  flex: none;
+  width: auto;
+}
+
+
+.boton-editar-precio:hover {
+  background: #ddd;
+}
+
+#estadoCaja {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+#estadoCaja li {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  color: #222;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Colores según el método */
+#estadoCaja li.efectivo {
+  background-color: #e0f8e9; /* Verde claro */
+}
+
+#estadoCaja li.nequi {
+  background-color: #f0e6ff; /* Morado muy claro */
+}
+
+#estadoCaja li.daviplata {
+  background-color: #ffe6e6; /* Rojo muy claro */
+}
+
+#estadoCaja li.pendiente {
+  background-color: #f2f2f2; /* Gris claro */
+}
+
