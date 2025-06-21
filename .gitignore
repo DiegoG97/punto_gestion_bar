@@ -15,3 +15,6 @@ vendor/
 
 # Composer
 composer.lock
+
+# Environment files
+php/db.php
